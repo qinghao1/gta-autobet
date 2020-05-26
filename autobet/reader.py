@@ -18,12 +18,12 @@ class Reader:
 		top = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_YS[i])
 		width = int(get_screen_size()[0] * PLACE_BET_SCREEN_ODDS_WIDTH)
 		height = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_HEIGHT)
-		return pyautogui.screenshot(region=(left, top, width, height))
-
-	def ocr(img):
-		raw_img = pytesseract.image_to_string(img)
+		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		# Convert to binary then invert
 		return ImageOps.invert(raw_img.convert('1'))
+
+	def ocr(img):
+		return pytesseract.image_to_string(img)
 
 	def parse_odd(string):
 		if string == 'EVENS':
