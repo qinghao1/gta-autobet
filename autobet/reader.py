@@ -12,6 +12,8 @@ if platform.system() == 'Windows':
 
 class Reader:
 	odd_regex = re.compile('^(\d+)\/1$')
+	#'X/1' can sometimes be OCRed as 'XN'
+	failed_regex = re.compile('^(\d)N$')
 
 	def enhance_screenshot(img):
 		# Invert then enhance contrast
@@ -25,8 +27,11 @@ class Reader:
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		return Reader.enhance_screenshot(raw_img)
 
-	def ocr(img):
-		return pytesseract.image_to_string(img)
+	def ocr_odds(img):
+		return pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=0123456789/EVNS')
+
+	def ocr_winning(img):
+		return pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
 
 	def parse_odd(string):
 		if string == 'EVENS':
@@ -34,9 +39,14 @@ class Reader:
 		else:
 			matched = Reader.odd_regex.match(string)
 			if not matched:
-				log(f'Error! {string} is not a valid odd.')
-				return 1
-			return matched[1]
+				# Try to fix
+				failed_match = Reader.failed_regex.match(string)
+				if failed_match:
+					return int(failed_match[1])
+				else:
+					log(f'Error! {string} is not a valid odd.')
+					return 1
+			return int(matched[1])
 
 	def parse_winning(string):
 		if not string:
@@ -51,7 +61,7 @@ class Reader:
 		odds = []
 		for i in range(NUM_BETS):
 			screenshot = Reader.screenshot_odd(i)
-			ocred = Reader.ocr(screenshot)
+			ocred = Reader.ocr_odds(screenshot)
 			print(f'Read {ocred} in position {i}')
 			parsed = Reader.parse_odd(ocred)
 			odds.append(parsed)
@@ -67,5 +77,5 @@ class Reader:
 
 	def read_winning():
 		screenshot = Reader.screenshot_winning()
-		ocred = Reader.ocr(screenshot)
+		ocred = Reader.ocr_winning(screenshot)
 		return Reader.parse_winning(ocred)
