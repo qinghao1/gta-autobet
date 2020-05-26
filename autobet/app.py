@@ -20,7 +20,7 @@ class App:
 	def start(self):
 		if self.started:
 			log("Already started.")
-			return self.stop()
+			return
 		if not check_game_running():
 			log("Game is not running.")
 			return self.stop()
