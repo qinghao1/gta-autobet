@@ -1,15 +1,14 @@
 from autobet.constants import *
 from autobet.util import get_screen_size
 
-import pyautogui
+import pydirectinput
 import bisect
 import os
 import random
 import time
 
 class Clicker:
-	MOUSE_MOVEMENT_MODE = pyautogui.easeOutQuad
-
+	# Duration is ignored in pydirectinput
 	def get_random_mouse_duration():
 		return random.uniform(MOUSE_MOVEMENT_MIN_DURATION_SECONDS,
 			MOUSE_MOVEMENT_MAX_DURATION_SECONDS)
@@ -31,16 +30,13 @@ class Clicker:
 		if frac:
 			x = int(get_screen_size()[0] * x)
 			y = int(get_screen_size()[1] * y)
-		pyautogui.moveTo(x, y, Clicker.get_random_mouse_duration(), Clicker.MOUSE_MOVEMENT_MODE)
+		pydirectinput.moveTo(x, y, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 		for _ in range(times):
-			pyautogui.click()
+			pydirectinput.click()
 			time.sleep(Clicker.get_random_delay())
-		pyautogui.moveTo(*Clicker.get_random_pixel(), Clicker.get_random_mouse_duration(), Clicker.MOUSE_MOVEMENT_MODE)
+		pydirectinput.moveTo(*Clicker.get_random_pixel(), Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
-
-	def click_img(img_path):
-		Clicker.click(*pyautogui.locateCenterOnScreen(img_path, confidence=0.8))
 
 	def click_place_bet_start_screen():
 		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)
