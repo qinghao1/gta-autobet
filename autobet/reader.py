@@ -1,6 +1,6 @@
 from autobet.constants import *
 from autobet.util import get_screen_size, log
-from PIL import ImageOps
+from PIL import ImageOps, ImageEnhance
 
 import re
 import platform
@@ -13,14 +13,17 @@ if platform.system() == 'Windows':
 class Reader:
 	odd_regex = re.compile('^(\d+)\/1$')
 
+	def enhance_screenshot(img):
+		# Invert then enhance contrast
+		return ImageEnhance.Contrast(ImageOps.invert(img)).enhance(2)
+
 	def screenshot_odd(i):
 		left = int(get_screen_size()[0] * PLACE_BET_SCREEN_ODDS_X)
 		top = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_YS[i])
 		width = int(get_screen_size()[0] * PLACE_BET_SCREEN_ODDS_WIDTH)
 		height = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
-		# Convert to binary then invert
-		return ImageOps.invert(raw_img.convert('1'))
+		return Reader.enhance_screenshot(raw_img)
 
 	def ocr(img):
 		return pytesseract.image_to_string(img)
@@ -60,8 +63,7 @@ class Reader:
 		width = int(get_screen_size()[0] * RESULTS_SCREEN_WINNING_WIDTH)
 		height = int(get_screen_size()[1] * RESULTS_SCREEN_WINNING_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
-		# Convert to binary then invert
-		return ImageOps.invert(raw_img.convert('1'))
+		return Reader.enhance_screenshot(raw_img)
 
 	def read_winning():
 		screenshot = Reader.screenshot_winning()
