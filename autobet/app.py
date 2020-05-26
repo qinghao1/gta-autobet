@@ -19,17 +19,17 @@ class App:
 
 	def start(self):
 		if self.started:
-			log("Already started. Exiting.")
-			return
+			log("Already started.")
+			return self.stop()
 		if not check_game_running():
-			log("Game is not running. Exiting.")
-			return
+			log("Game is not running.")
+			return self.stop()
 		if not check_aspect_ratio():
-			log("Wrong aspect ratio. Exiting.")
-			return
+			log("Wrong aspect ratio.")
+			return self.stop()
 		if not check_betting_screen():
-			log("Not on betting screen. Exiting.")
-			return
+			log("Not on betting screen.")
+			return self.stop()
 		log('Started.')
 		self.started = True
 		with keyboard.Listener(on_press=self.on_press) as listener:
@@ -38,11 +38,8 @@ class App:
 				self.stop()
 
 	def stop(self):
-		if not self.started:
-			log("Already stopped. Exiting.")
-			return
-		log('Stopped.')
 		self.started = False
+		log('Stopped.')
 		self.run()
 
 	def run(self):
