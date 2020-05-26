@@ -38,15 +38,16 @@ class Reader:
 			return 1
 		else:
 			matched = Reader.odd_regex.match(string)
-			if not matched:
-				# Try to fix
-				failed_match = Reader.failed_regex.match(string)
-				if failed_match:
-					return int(failed_match[1])
-				else:
-					log(f'Error! {string} is not a valid odd.')
-					return 1
-			return int(matched[1])
+			if matched:
+				return int(matched[1])
+
+			failed_match = Reader.failed_regex.match(string)
+			if failed_match:
+				return int(failed_match[1])
+
+			log(f'Error! {string} is not a valid odd.')
+			return 1
+
 
 	def parse_winning(string):
 		if not string:
