@@ -1,2 +1,2 @@
-# gta-autobet
-Autobetter for GTA Online
+# GTA Autobet
+Autobetter for GTA Online's horse racing minigame
