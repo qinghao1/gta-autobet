@@ -35,7 +35,8 @@ class App:
 		with keyboard.Listener(on_press=self.on_press) as listener:
 			self.main_loop()
 			if not listener.running:
-				self.stop()
+				break
+		self.stop()
 
 	def stop(self):
 		self.started = False
