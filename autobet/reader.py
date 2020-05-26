@@ -3,8 +3,12 @@ from autobet.util import get_screen_size, log
 from PIL import ImageOps
 
 import re
+import platform
 import pytesseract
 import pyautogui
+
+if platform.system() == 'Windows':
+	pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 class Reader:
 	odd_regex = re.compile('^(\d+)\/1$')

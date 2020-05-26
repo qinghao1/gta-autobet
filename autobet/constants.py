@@ -1,6 +1,7 @@
 from pynput import keyboard
 
 GAME_EXECUTABLE = 'GTA5.exe'
+TESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 ASPECT_RATIO = 16/9
 START_STOP_KEY = keyboard.Key.f8
 BETTING_SCREEN_TOP_LEFT_PIXEL_RGB = (21, 0, 48)
