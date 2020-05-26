@@ -21,15 +21,15 @@ class App:
 		if self.started:
 			log("Already started. Exiting.")
 			return
-		# if not check_game_running():
-		# 	log("Game is not running. Exiting.")
-		# 	return
-		# if not check_aspect_ratio():
-		# 	log("Wrong aspect ratio. Exiting.")
-		# 	return
-		# if not check_betting_screen():
-		# 	log("Not on betting screen. Exiting.")
-		# 	return
+		if not check_game_running():
+			log("Game is not running. Exiting.")
+			return
+		if not check_aspect_ratio():
+			log("Wrong aspect ratio. Exiting.")
+			return
+		if not check_betting_screen():
+			log("Not on betting screen. Exiting.")
+			return
 		log('Started.')
 		self.started = True
 		with keyboard.Listener(on_press=self.on_press) as listener:
