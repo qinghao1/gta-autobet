@@ -45,6 +45,7 @@ class App:
 		self.run()
 
 	def run(self):
+		log("Waiting for key input.")
 		with keyboard.Listener(on_press=self.on_press) as listener:
 			listener.join()
 		self.start()
