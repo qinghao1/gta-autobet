@@ -1,6 +1,7 @@
 from autobet.constants import *
 from autobet.util import get_screen_size
 
+import pyautogui
 import pydirectinput
 import bisect
 import os
