@@ -41,7 +41,7 @@ class Clicker:
 		time.sleep(Clicker.get_random_delay())
 
 	def click(x, y, times=1, frac=True):
-		Reader.move_mouse(x, y, frac)
+		Clicker.move_mouse(x, y, frac)
 		for _ in range(times):
 			Clicker.click_curr()
 
