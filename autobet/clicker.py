@@ -8,7 +8,6 @@ import random
 import time
 
 class Clicker:
-	# Duration is ignored in pydirectinput
 	def get_random_mouse_duration():
 		return random.uniform(MOUSE_MOVEMENT_MIN_DURATION_SECONDS,
 			MOUSE_MOVEMENT_MAX_DURATION_SECONDS)
@@ -32,13 +31,17 @@ class Clicker:
 		pydirectinput.mouseDown()
 		time.sleep(Clicker.get_random_delay())
 
-
-	def click(x, y, times=1, frac=True):
+	def move_mouse(x, y, frac=True):
 		if frac:
 			x = int(get_screen_size()[0] * x)
 			y = int(get_screen_size()[1] * y)
-		pydirectinput.moveTo(x, y, Clicker.get_random_mouse_duration())
+		dx = int(get_screen_size()[0] * random.uniform(-MOUSE_X_RADIUS, MOUSE_X_RADIUS))
+		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE__RADIUS))
+		pyautogui.moveTo(x+dx, y+dy, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
+
+	def click(x, y, times=1, frac=True):
+		move_mouse(x, y, frac)
 		for _ in range(times):
 			Clicker.click_curr()
 
