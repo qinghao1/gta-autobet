@@ -26,6 +26,13 @@ class Clicker:
 		dirname = os.path.dirname(__file__)
 		return os.path.join(dirname, relative_path)
 
+	def click_curr():
+		pydirectinput.mouseUp()
+		time.sleep(Clicker.get_random_delay())
+		pydirectinput.mouseDown()
+		time.sleep(Clicker.get_random_delay())
+
+
 	def click(x, y, times=1, frac=True):
 		if frac:
 			x = int(get_screen_size()[0] * x)
@@ -33,10 +40,7 @@ class Clicker:
 		pydirectinput.moveTo(x, y, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 		for _ in range(times):
-			pydirectinput.mouseUp()
-			time.sleep(Clicker.get_random_delay())
-			pydirectinput.mouseDown()
-			time.sleep(Clicker.get_random_delay())
+			Clicker.click_curr()
 		pydirectinput.moveTo(*Clicker.get_random_pixel(), Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 
