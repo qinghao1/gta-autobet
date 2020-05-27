@@ -41,8 +41,6 @@ class Clicker:
 		time.sleep(Clicker.get_random_delay())
 		for _ in range(times):
 			Clicker.click_curr()
-		pydirectinput.moveTo(*Clicker.get_random_pixel(), Clicker.get_random_mouse_duration())
-		time.sleep(Clicker.get_random_delay())
 
 	def click_place_bet_start_screen():
 		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)
