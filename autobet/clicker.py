@@ -26,7 +26,7 @@ class Clicker:
 		dirname = os.path.dirname(__file__)
 		return os.path.join(dirname, relative_path)
 
-	def click_curr():
+	def click_curr(button='left'):
 		pydirectinput.mouseUp()
 		time.sleep(Clicker.get_random_delay())
 		pydirectinput.mouseDown()
@@ -41,10 +41,10 @@ class Clicker:
 		pyautogui.moveTo(x+dx, y+dy, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 
-	def click(x, y, times=1, frac=True):
+	def click(x, y, times=1, frac=True, button='left'):
 		Clicker.move_mouse(x, y, frac)
 		for _ in range(times):
-			Clicker.click_curr()
+			Clicker.click_curr(button)
 
 	def click_place_bet_start_screen():
 		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)

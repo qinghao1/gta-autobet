@@ -2,7 +2,7 @@ from pynput import keyboard
 from autobet.clicker import Clicker
 from autobet.reader import Reader
 from autobet.bettor import Bettor
-from autobet.constants import START_STOP_KEY, HORSE_RACE_DURATION_SECONDS
+from autobet.constants import START_STOP_KEY, HORSE_RACE_DURATION_SECONDS, SAFE_CLICK_X_Y
 from autobet.util import *
 
 import time
@@ -61,9 +61,12 @@ class App:
 		while not at_results_screen():
 			# Sometimes it lags here, need to click
 			time.sleep(0.5)
-			Clicker.click(100, 100)
+			Clicker.click(*SAFE_CLICK_X_Y)
 		winning = Reader.read_winning()
 		net_won = winning - bet_amount
 		log(f'Made ${net_won}')
 		self.winnings.append(net_won)
 		Clicker.click_bet_again()
+	# Exit and re-enter betting game here because of bug
+		Clicker.click(*SAFE_CLICK_X_Y, 'right')
+		Clicker.click(*SAFE_CLICK_X_Y, 'left')
