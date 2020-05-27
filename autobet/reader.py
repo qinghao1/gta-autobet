@@ -1,9 +1,10 @@
 from autobet.constants import *
 from autobet.util import get_screen_size, log
 from PIL import ImageOps, ImageEnhance
+from datetime import datetime
 
 import re
-import time, datetime
+import time
 import platform
 import pytesseract
 import pyautogui
