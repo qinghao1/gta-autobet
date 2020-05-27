@@ -27,7 +27,7 @@ class App:
 		if not check_aspect_ratio():
 			log("Wrong aspect ratio.")
 			return self.stop()
-		if not check_betting_screen():
+		if not at_start_screen():
 			log("Not on betting screen.")
 			return self.stop()
 		log('Started.')
@@ -58,6 +58,10 @@ class App:
 		Clicker.place_bet(bet_position, bet_amount)
 		log(f'Placing bet on {bet_position} for {bet_amount}')
 		time.sleep(HORSE_RACE_DURATION_SECONDS)
+		while not at_results_screen():
+			# Sometimes it lags here, need to click
+			time.sleep(0.5)
+			Clicker.click_curr()
 		winning = Reader.read_winning()
 		net_won = winning - bet_amount
 		log(f'Made ${net_won}')
