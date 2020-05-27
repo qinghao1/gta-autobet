@@ -12,9 +12,10 @@ if platform.system() == 'Windows':
 	pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 class Reader:
-	odd_regex = re.compile('^(\d+)\/1$')
 	#'X/1' can sometimes be OCRed as 'XN'
-	failed_odd_regex = re.compile('^(\d)N$')
+	odd_regex = re.compile('^(\d+)\/?1?N?$')
+	# Assume that if '+' is read, it's always followed by the currency symbol
+	winning_regex = re.compile('^(?:\+.)?(\d+)$')
 
 	def generate_screenshot_name():
 		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.png'\
@@ -46,12 +47,6 @@ class Reader:
 		img_name = Reader.generate_screenshot_name()
 		img.save(img_name)
 		log(f'Error! Read {ocr_res} for odd screenshot "{img_name}"')
-
-		# Try fix for one failure case
-		failed_match = Reader.failed_odd_regex.match(ocr_res)
-		if failed_match:
-			return int(failed_match[1])
-
 		return 1
 
 
@@ -59,10 +54,9 @@ class Reader:
 		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
 
 		# Good OCR
-		# '+X30000' where X is the currency symbol
-		if ocr_res and ocr_res[0] == '+':
-			log(f'Parsed {ocr_res[2:]} in position {i}')
-			return int(ocr_res[2:])
+		matched = Reader.winning_regex.match(ocr_res)
+		if matched:
+			return int(matched[1])
 
 		# Bad OCR
 		img_name = Reader.generate_screenshot_name()
