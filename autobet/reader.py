@@ -17,7 +17,7 @@ class Reader:
 	failed_odd_regex = re.compile('^(\d)N$')
 
 	def generate_screenshot_name():
-		return f'Screenshot on {time.ctime()}.png'.replace(' ','_')
+		return f'Screenshot on {time.ctime()}.png'.replace(' ','_').replace(':','-')
 
 	def enhance_screenshot(img):
 		# Invert then enhance contrast
