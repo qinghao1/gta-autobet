@@ -3,6 +3,7 @@ from autobet.util import get_screen_size, log
 from PIL import ImageOps, ImageEnhance
 
 import re
+import time
 import platform
 import pytesseract
 import pyautogui
@@ -13,7 +14,10 @@ if platform.system() == 'Windows':
 class Reader:
 	odd_regex = re.compile('^(\d+)\/1$')
 	#'X/1' can sometimes be OCRed as 'XN'
-	failed_regex = re.compile('^(\d)N$')
+	failed_odd_regex = re.compile('^(\d)N$')
+
+	def generate_screenshot_name():
+		return 'Screenshot on ' + time.ctime()
 
 	def enhance_screenshot(img):
 		# Invert then enhance contrast
@@ -27,44 +31,49 @@ class Reader:
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		return Reader.enhance_screenshot(raw_img)
 
-	def ocr_odds(img):
-		return pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=0123456789/EVNS')
+	def parse_odd(img):
+		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=0123456789/EVNS')
 
-	def ocr_winning(img):
-		return pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
-
-	def parse_odd(string):
-		if string == 'EVENS':
+		# Good OCR
+		if ocr_res == 'EVENS':
 			return 1
-		else:
-			matched = Reader.odd_regex.match(string)
-			if matched:
-				return int(matched[1])
+		matched = Reader.odd_regex.match(ocr_res)
+		if matched:
+			return int(matched[1])
 
-			failed_match = Reader.failed_regex.match(string)
-			if failed_match:
-				return int(failed_match[1])
+		# Bad OCR
+		img_name = Reader.generate_screenshot_name()
+		img.save(img_name)
+		log(f'Error! Read {ocr_res} for odd screenshot "{img_name}"')
 
-			log(f'Error! {string} is not a valid odd.')
-			return 1
+		# Try fix for one failure case
+		failed_match = Reader.failed_odd_regex.match(ocr_res)
+		if failed_match:
+			return int(failed_match[1])
+
+		return 1
 
 
-	def parse_winning(string):
-		if not string:
-			log(f'Error! Empty winning.')
-			return 0
-		if string[0] != '+':
-			return 0
+	def parse_winning(img):
+		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
+
+		# Good OCR
 		# '+X30000' where X is the currency symbol
-		return int(string[2:])
+		if ocr_res and ocr_res[0] == '+':
+			return int(ocr_res[2:])
+
+		# Bad OCR
+		img_name = Reader.generate_screenshot_name()
+		img.save(img_name)
+		log(f'Error! Read {ocr_res} for winning screenshot "{img_name}"')
+
 
 	def read_odds():
 		odds = []
 		for i in range(NUM_BETS):
 			screenshot = Reader.screenshot_odd(i)
-			ocred = Reader.ocr_odds(screenshot)
-			print(f'Read {ocred} in position {i}')
-			parsed = Reader.parse_odd(ocred)
+			parsed = Reader.parse_odd(screenshot)
+			print(f'Read {parsed} in position {i}')
 			odds.append(parsed)
 		return odds
 
@@ -78,5 +87,4 @@ class Reader:
 
 	def read_winning():
 		screenshot = Reader.screenshot_winning()
-		ocred = Reader.ocr_winning(screenshot)
-		return Reader.parse_winning(ocred)
+		return Reader.parse_winning(screenshot)
