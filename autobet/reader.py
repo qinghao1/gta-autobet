@@ -24,7 +24,7 @@ class Reader:
 
 	def enhance_screenshot(img):
 		# Invert then enhance contrast
-		return ImageEnhance.Contrast(ImageOps.invert(img)).enhance(2)
+		return ImageEnhance.Contrast(ImageOps.invert(img)).enhance(3)
 
 	def screenshot_odd(i):
 		left = int(get_screen_size()[0] * PLACE_BET_SCREEN_ODDS_X)
