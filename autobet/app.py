@@ -67,6 +67,6 @@ class App:
 		log(f'Made ${net_won}')
 		self.winnings.append(net_won)
 		Clicker.click_bet_again()
-	# Exit and re-enter betting game here because of bug
-		Clicker.click(*SAFE_CLICK_X_Y, 'right')
-		Clicker.click(*SAFE_CLICK_X_Y, 'left')
+		# Exit and re-enter betting game here because of bug
+		Clicker.click(*SAFE_CLICK_X_Y, button='right')
+		Clicker.click(*SAFE_CLICK_X_Y, button='left')
