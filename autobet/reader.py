@@ -60,12 +60,14 @@ class Reader:
 		# Good OCR
 		# '+X30000' where X is the currency symbol
 		if ocr_res and ocr_res[0] == '+':
+			log(f'Parsed {ocr_res[2:]} in position {i}')
 			return int(ocr_res[2:])
 
 		# Bad OCR
 		img_name = Reader.generate_screenshot_name()
 		img.save(img_name)
 		log(f'Error! Read {ocr_res} for winning screenshot "{img_name}"')
+		return 0
 
 
 	def read_odds():
@@ -73,7 +75,7 @@ class Reader:
 		for i in range(NUM_BETS):
 			screenshot = Reader.screenshot_odd(i)
 			parsed = Reader.parse_odd(screenshot)
-			print(f'Read {parsed} in position {i}')
+			log(f'Parsed {parsed} in position {i}')
 			odds.append(parsed)
 		return odds
 
