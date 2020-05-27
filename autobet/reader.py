@@ -3,7 +3,7 @@ from autobet.util import get_screen_size, log
 from PIL import ImageOps, ImageEnhance
 
 import re
-import time
+import time, datetime
 import platform
 import pytesseract
 import pyautogui
@@ -17,7 +17,8 @@ class Reader:
 	failed_odd_regex = re.compile('^(\d)N$')
 
 	def generate_screenshot_name():
-		return f'Screenshot on {time.ctime()}.png'.replace(' ','_').replace(':','-')
+		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.png'\
+			.replace(' ','_').replace(':','-')
 
 	def enhance_screenshot(img):
 		# Invert then enhance contrast
