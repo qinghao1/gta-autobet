@@ -61,7 +61,7 @@ class App:
 		while not at_results_screen():
 			# Sometimes it lags here, need to click
 			time.sleep(0.5)
-			Clicker.click(5, 5)
+			Clicker.click(100, 100)
 		winning = Reader.read_winning()
 		net_won = winning - bet_amount
 		log(f'Made ${net_won}')
