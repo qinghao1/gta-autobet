@@ -33,7 +33,9 @@ class Clicker:
 		pydirectinput.moveTo(x, y, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 		for _ in range(times):
-			pydirectinput.click()
+			pydirectinput.mouseUp()
+			time.sleep(Clicker.get_random_delay())
+			pydirectinput.mouseDown()
 			time.sleep(Clicker.get_random_delay())
 		pydirectinput.moveTo(*Clicker.get_random_pixel(), Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
