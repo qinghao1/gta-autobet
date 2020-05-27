@@ -62,6 +62,7 @@ class App:
 		if not at_results_screen():
 			time.sleep(3)
 		if not at_results_screen():
+			log('Game bug. Exiting and re-entering...')
 			Clicker.click(*SAFE_CLICK_X_Y, button='right')
 			time.sleep(1)
 			Clicker.click(*SAFE_CLICK_X_Y, button='left')
