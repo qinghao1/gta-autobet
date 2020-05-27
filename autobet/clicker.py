@@ -36,7 +36,7 @@ class Clicker:
 			x = int(get_screen_size()[0] * x)
 			y = int(get_screen_size()[1] * y)
 		dx = int(get_screen_size()[0] * random.uniform(-MOUSE_X_RADIUS, MOUSE_X_RADIUS))
-		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE__RADIUS))
+		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE_Y_RADIUS))
 		pyautogui.moveTo(x+dx, y+dy, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 
