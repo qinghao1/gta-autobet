@@ -32,6 +32,10 @@ class Clicker:
 		pydirectinput.mouseDown()
 		time.sleep(Clicker.get_random_delay())
 
+	def press_key(key):
+		pydirectinput.press(key)
+		time.sleep(Clicker.get_random_delay())
+
 	def move_mouse(x, y, frac=True):
 		if frac:
 			x = int(get_screen_size()[0] * x)

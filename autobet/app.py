@@ -64,9 +64,9 @@ class App:
 			time.sleep(3)
 		if not at_results_screen():
 			log('Game bug. Exiting and re-entering...')
-			Clicker.click(*SAFE_CLICK_X_Y, button='right')
+			Clicker.press_key('esc')
 			time.sleep(1)
-			Clicker.click(*SAFE_CLICK_X_Y, button='left')
+			Clicker.click(*SAFE_CLICK_X_Y)
 		else:
 			winning = Reader.read_winning()
 			net_won = winning - bet_amount
