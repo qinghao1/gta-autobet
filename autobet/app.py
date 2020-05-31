@@ -27,9 +27,6 @@ class App:
 		if not check_aspect_ratio():
 			log("Wrong aspect ratio.")
 			return self.stop()
-		if not at_start_screen():
-			log("Not on betting screen.")
-			return self.stop()
 		log('Started.')
 		self.started = True
 		with keyboard.Listener(on_press=self.on_press) as listener:
@@ -51,6 +48,10 @@ class App:
 		self.start()
 
 	def main_loop(self):
+		if not at_start_screen():
+			log("Not on betting screen.")
+			time.sleep(1)
+			return
 		Clicker.click_place_bet_start_screen()
 		odds = Reader.read_odds()
 		self.odds.append(odds)
