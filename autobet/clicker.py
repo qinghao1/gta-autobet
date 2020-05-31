@@ -21,10 +21,10 @@ class Clicker:
 		rand_y = int(random.random() * y)
 		return rand_x, rand_y
 
-	def click_curr(button='left'):
-		pydirectinput.mouseUp()
+	def click_curr(x, y):
+		pydirectinput.mouseUp(x, y)
 		time.sleep(Clicker.get_random_delay())
-		pydirectinput.mouseDown()
+		pydirectinput.mouseDown(x, y)
 		time.sleep(Clicker.get_random_delay())
 
 	def press_key(key):
@@ -40,10 +40,12 @@ class Clicker:
 		pyautogui.moveTo(x+dx, y+dy, Clicker.get_random_mouse_duration())
 		time.sleep(Clicker.get_random_delay())
 
-	def click(x, y, times=1, frac=True, button='left'):
-		Clicker.move_mouse(x, y, frac)
+	def click(x, y, times=1, frac=True):
+		if frac:
+			x = int(get_screen_size()[0] * x)
+			y = int(get_screen_size()[1] * y)
 		for _ in range(times):
-			Clicker.click_curr(button)
+			Clicker.click_curr(x, y)
 
 	def click_place_bet_start_screen():
 		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)
