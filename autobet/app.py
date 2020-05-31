@@ -2,12 +2,14 @@ from pynput import keyboard
 from autobet.clicker import Clicker
 from autobet.reader import Reader
 from autobet.bettor import Bettor
-from autobet.constants import START_STOP_KEY, HORSE_RACE_DURATION_SECONDS, SAFE_CLICK_X_Y
+from autobet.constants import HORSE_RACE_DURATION_SECONDS, SAFE_CLICK_X_Y
 from autobet.util import *
 
 import time
 
 class App:
+	START_STOP_KEY = keyboard.Key.f8
+
 	def on_press(self, key):
 		if key == START_STOP_KEY:
 			return False
