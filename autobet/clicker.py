@@ -44,8 +44,10 @@ class Clicker:
 		if frac:
 			x = int(get_screen_size()[0] * x)
 			y = int(get_screen_size()[1] * y)
+		dx = int(get_screen_size()[0] * random.uniform(-MOUSE_X_RADIUS, MOUSE_X_RADIUS))
+		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE_Y_RADIUS))
 		for _ in range(times):
-			Clicker.click_curr(x, y)
+			Clicker.click_curr(x+dx, y+dy)
 
 	def click_place_bet_start_screen():
 		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)
