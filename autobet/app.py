@@ -52,8 +52,8 @@ class App:
 
 	def main_loop(self):
 		if not at_start_screen():
-			log("Not on betting screen. Waiting for 10s.")
-			time.sleep(10)
+			log("Not on betting screen. Waiting for 5s.")
+			time.sleep(5)
 			return
 
 		Clicker.click_place_bet_start_screen()
