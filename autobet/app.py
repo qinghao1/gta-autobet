@@ -52,8 +52,8 @@ class App:
 
 	def main_loop(self):
 		if not at_start_screen():
-			log("Not on betting screen. Waiting for 1s.")
-			time.sleep(1)
+			log("Not on betting screen. Waiting for 10s.")
+			time.sleep(10)
 			return
 		Clicker.click_place_bet_start_screen()
 		odds = Reader.read_odds()
