@@ -56,6 +56,11 @@ class Clicker:
 	def click_bet_again():
 		Clicker.click(RESULTS_SCREEN_BET_AGAIN_X, RESULTS_SCREEN_BET_AGAIN_Y)
 
+	def exit_and_reenter():
+		Clicker.press_key('esc')
+		time.sleep(Clicker.get_random_delay())
+		Clicker.click(*SAFE_CLICK_X_Y)
+
 	def place_bet(position, amount):
 		# Click corresponding horse
 		Clicker.click(PLACE_BET_SCREEN_BETS_X, PLACE_BET_SCREEN_BETS_YS[position])
