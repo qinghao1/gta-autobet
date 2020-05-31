@@ -72,7 +72,6 @@ class App:
 		log(f'Placing bet on {bet_position} for {bet_amount}')
 		time.sleep(HORSE_RACE_DURATION_SECONDS)
 
-		# Sometimes it lags here, need to exit and re-enter betting game
 		if not at_results_screen():
 			time.sleep(3)
 		if not at_results_screen():
@@ -85,3 +84,10 @@ class App:
 		log(f'Made ${net_won}')
 		self.winnings.append(net_won)
 		Clicker.click_bet_again()
+
+		if not at_start_screen():
+			time.sleep(3)
+		if not at_start_screen():
+			log('Game bug. Exiting and re-entering...')
+			Clicker.exit_and_reenter()
+			return
