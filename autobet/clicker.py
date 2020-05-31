@@ -4,7 +4,6 @@ from autobet.util import get_screen_size
 import pyautogui
 import pydirectinput
 import bisect
-import os
 import random
 import time
 
@@ -21,10 +20,6 @@ class Clicker:
 		rand_x = int(random.random() * x)
 		rand_y = int(random.random() * y)
 		return rand_x, rand_y
-
-	def get_absolute_path(relative_path):
-		dirname = os.path.dirname(__file__)
-		return os.path.join(dirname, relative_path)
 
 	def click_curr(button='left'):
 		pydirectinput.mouseUp()
