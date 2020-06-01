@@ -11,7 +11,7 @@ class App:
 	START_STOP_KEY = keyboard.Key.f8
 
 	def on_press(self, key):
-		if key == START_STOP_KEY:
+		if key == App.START_STOP_KEY:
 			return False
 
 	def __init__(self):
