@@ -53,9 +53,15 @@ class App:
 		self.start()
 
 	def main_loop(self):
+		for _ in range(6):
+			if not at_start_screen():
+				log("Not on betting screen. Waiting for 5s.")
+				time.sleep(5)
+			else:
+				break
 		if not at_start_screen():
-			log("Not on betting screen. Waiting for 5s.")
-			time.sleep(5)
+			log("Waited for 30s. Exiting and re-entering...")
+			Clicker.exit_and_reenter()
 			return
 
 		Clicker.click_place_bet_start_screen()
