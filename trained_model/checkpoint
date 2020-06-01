@@ -1,0 +1,2 @@
+model_checkpoint_path: "saved_ocr_model"
+all_model_checkpoint_paths: "saved_ocr_model"
