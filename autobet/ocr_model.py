@@ -8,29 +8,15 @@ SAVED_MODEL_PATH = 'trained_model/saved_ocr_model'
 MAX_ODDS = 30
 INPUT_SHAPE = (int(PLACE_BET_SCREEN_ODDS_HEIGHT * SCREEN_HEIGHT), int(PLACE_BET_SCREEN_ODDS_WIDTH * SCREEN_WIDTH), 1)
 
-def model():
+def new_model():
         # ~1.5 million parameters
-        model = Sequential()
-        model.add(Conv2D(32, kernel_size=(3, 3),
-                         activation='relu',
-                         input_shape=INPUT_SHAPE))
-        model.add(Conv2D(32, (3, 3)))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
-
-        model.add(Conv2D(64, (3, 3), padding='same'))
-        model.add(Activation('relu'))
-        model.add(Conv2D(64, (3, 3)))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
-
-        model.add(Flatten())
-        model.add(Dense(512))
-        model.add(Activation('relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(MAX_ODDS, activation='softmax'))
+        model = tf.keras.applications.MobileNetV2(
+            include_top=True,
+            weights=None,
+            input_shape=INPUT_SHAPE,
+            pooling=None,
+            classes=MAX_ODDS,
+        )
 
         model.compile(optimizer='adam',
                   loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
@@ -38,7 +24,7 @@ def model():
         return model
 
 def load_model():
-	m = model()
+	m = new_model()
 	m.load_weights(SAVED_MODEL_PATH)
 	return m
 
