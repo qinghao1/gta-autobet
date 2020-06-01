@@ -6,3 +6,4 @@ opencv-python
 pillow
 pydirectinput
 tensorflow
+numpy
