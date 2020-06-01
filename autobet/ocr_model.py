@@ -8,7 +8,7 @@ MAX_ODDS = 30
 INPUT_SHAPE = (int(PLACE_BET_SCREEN_ODDS_WIDTH * SCREEN_WIDTH), int(PLACE_BET_SCREEN_ODDS_HEIGHT * SCREEN_HEIGHT), 3)
 
 def model():
-        # ~1 million parameters
+        # ~1.5 million parameters
         model = Sequential()
         model.add(Conv2D(32, kernel_size=(3, 3),
                          activation='relu',
