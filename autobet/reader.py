@@ -9,7 +9,6 @@ import time
 import platform
 import pytesseract
 import pyautogui
-import numpy as np
 
 if platform.system() == 'Windows':
 	pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
@@ -37,7 +36,7 @@ class Reader:
 		height = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		enhanced_img = Reader.enhance_screenshot(raw_img)
-		return enhanced_img.convert('1')
+		return enhanced_img.convert('L')
 
 	def parse_odd(img):
 		pass
