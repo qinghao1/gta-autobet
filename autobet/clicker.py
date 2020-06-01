@@ -61,10 +61,12 @@ class Clicker:
 		Clicker.click(*SAFE_CLICK_X_Y)
 
 	def place_bet(position, amount):
+		num_clicks = bisect.bisect_left(BET_AMOUNTS, amount)
+		if num_clicks == 0:
+			return
 		# Click corresponding horse
 		Clicker.click(PLACE_BET_SCREEN_BETS_X, PLACE_BET_SCREEN_BETS_YS[position])
 		# Click bet amount
-		num_clicks = bisect.bisect_left(BET_AMOUNTS, amount)
 		Clicker.click(PLACE_BET_SCREEN_INCREMENT_X, PLACE_BET_SCREEN_INCREMENT_Y, times=num_clicks)
 		# Click place bet
 		Clicker.click(PLACE_BET_SCREEN_PLACE_BET_X, PLACE_BET_SCREEN_PLACE_BET_Y)

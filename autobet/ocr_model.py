@@ -29,7 +29,7 @@ def load_model():
 	return m
 
 def img_to_arr(img):
-    return np.array(img) / 255
+    return np.expand_dims(np.array(img) / 255, -1)
 
 def parse(model, img):
 	img_arr = np.expand_dims(img_to_arr(img), 0)
