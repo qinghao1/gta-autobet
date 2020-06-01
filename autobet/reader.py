@@ -1,6 +1,5 @@
 from autobet.constants import *
 from autobet.util import get_screen_size, log
-from autobet.ocr_model import load_model
 from PIL import ImageOps, ImageEnhance
 from datetime import datetime
 
@@ -9,11 +8,12 @@ import time
 import platform
 import pytesseract
 import pyautogui
+import autobet.ocr_model as ocr_model
 
 if platform.system() == 'Windows':
 	pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
-MODEL = load_model()
+MODEL = ocr_model.load_model()
 
 class Reader:
 	#'X/1' can sometimes be OCRed as 'XN'
@@ -38,9 +38,6 @@ class Reader:
 		enhanced_img = Reader.enhance_screenshot(raw_img)
 		return enhanced_img.convert('L')
 
-	def parse_odd(img):
-		pass
-
 	def parse_winning(img):
 		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
 
@@ -55,14 +52,9 @@ class Reader:
 		log(f'Error! Read {ocr_res} for winning screenshot "{img_name}"')
 		return 0
 
-
 	def read_odds():
-		odds = []
-		for i in range(NUM_BETS):
-			screenshot = Reader.screenshot_odd(i)
-			parsed = Reader.parse_odd(screenshot)
-			log(f'Parsed {parsed} in position {i}')
-			odds.append(parsed)
+		screenshots = [Reader.screenshot_odd(i) for i in range(NUM_BETS)]
+		odds = ocr_model.parse_multiple(MODEL, screenshots)
 		return odds
 
 	def screenshot_winning():

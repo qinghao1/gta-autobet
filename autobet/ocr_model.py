@@ -42,7 +42,15 @@ def load_model():
 	m.load_weights(SAVED_MODEL_PATH)
 	return m
 
-def parse(model, img_arr):
-	img_arr = np.expand_dims(img_arr, 0)
-	res = model.predict(img_arr)
-	print(res)
+def img_to_arr(img):
+    return np.array(img) / 255
+
+def parse(model, img):
+	img_arr = np.expand_dims(img_to_arr(img), 0)
+	pred = model.predict(img_arr)
+	return np.argmax(pred) + 1
+
+def parse_multiple(model, imgs):
+    img_arrs = np.asarray([img_to_arr(img) for img in imgs])
+    classes = model.predict_classes(img_arrs)
+    return [i+1 for i in classes]
