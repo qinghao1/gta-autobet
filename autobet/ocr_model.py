@@ -1,11 +1,12 @@
 import tensorflow as tf
+import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import *
 from autobet.constants import PLACE_BET_SCREEN_ODDS_WIDTH, PLACE_BET_SCREEN_ODDS_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 
 SAVED_MODEL_PATH = 'trained_model/saved_ocr_model'
 MAX_ODDS = 30
-INPUT_SHAPE = (int(PLACE_BET_SCREEN_ODDS_WIDTH * SCREEN_WIDTH), int(PLACE_BET_SCREEN_ODDS_HEIGHT * SCREEN_HEIGHT), 3)
+INPUT_SHAPE = (int(PLACE_BET_SCREEN_ODDS_HEIGHT * SCREEN_HEIGHT), int(PLACE_BET_SCREEN_ODDS_WIDTH * SCREEN_WIDTH), 3)
 
 def model():
         # ~1.5 million parameters
@@ -35,3 +36,15 @@ def model():
                   loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
         return model
+
+def load_model():
+	m = model()
+	m.load_weights(SAVED_MODEL_PATH)
+	return m
+
+def parse(model, img):
+	img_arr = tf.keras.preprocessing.image.img_to_array(img)
+	img_arr /= 255
+	img_arr = np.expand_dims(img_arr, 0)
+	res = model.predict(img_arr)
+	print(res)
