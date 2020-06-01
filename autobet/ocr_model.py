@@ -38,5 +38,6 @@ def parse(model, img):
 
 def parse_multiple(model, imgs):
     img_arrs = np.asarray([img_to_arr(img) for img in imgs])
-    classes = model.predict_classes(img_arrs)
-    return [i+1 for i in classes]
+    pred = model.predict(img_arrs)
+    pred_classes = np.argmax(pred, axis=1)
+    return [i+1 for i in pred_classes]
