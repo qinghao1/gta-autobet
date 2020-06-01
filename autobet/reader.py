@@ -21,7 +21,6 @@ class Reader:
 	ODD_REGEX = re.compile('^(\d+)\/?1?N?$')
 	# Assume that if '+' is read, it's always followed by the currency symbol
 	WINNING_REGEX = re.compile('^(?:\+.)?(\d+)$')
-	BINARIZE_THRESHOLD = 128
 
 	def generate_screenshot_name():
 		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.png'\
@@ -38,9 +37,7 @@ class Reader:
 		height = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		enhanced_img = Reader.enhance_screenshot(raw_img)
-		img_arr = np.array(enhanced_img)
-		binarized_img = np.mean(enhanced_img, axis=2) > Reader.BINARIZE_THRESHOLD
-		return binarized_img
+		return enhanced_img.convert('1')
 
 	def parse_odd(img):
 		pass
