@@ -21,8 +21,8 @@ class Reader:
 	# Assume that if '+' is read, it's always followed by the currency symbol
 	WINNING_REGEX = re.compile('^(?:\+.)?(\d+)$')
 
-	def generate_screenshot_name():
-		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.png'\
+	def generate_screenshot_name(fmt):
+		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.{fmt}'\
 			.replace(' ','_').replace(':','-')
 
 	def enhance_screenshot(img):
@@ -47,9 +47,6 @@ class Reader:
 			return int(matched[1])
 
 		# Bad OCR
-		img_name = Reader.generate_screenshot_name()
-		img.save(img_name)
-		log(f'Error! Read {ocr_res} for winning screenshot "{img_name}"')
 		return 0
 
 	def read_odds():
