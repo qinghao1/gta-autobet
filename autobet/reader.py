@@ -1,5 +1,6 @@
 from autobet.constants import *
 from autobet.util import get_screen_size, log
+from autobet.ocr_model import load_model
 from PIL import ImageOps, ImageEnhance
 from datetime import datetime
 
@@ -8,15 +9,19 @@ import time
 import platform
 import pytesseract
 import pyautogui
+import numpy as np
 
 if platform.system() == 'Windows':
 	pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
+MODEL = load_model()
+
 class Reader:
 	#'X/1' can sometimes be OCRed as 'XN'
-	odd_regex = re.compile('^(\d+)\/?1?N?$')
+	ODD_REGEX = re.compile('^(\d+)\/?1?N?$')
 	# Assume that if '+' is read, it's always followed by the currency symbol
-	winning_regex = re.compile('^(?:\+.)?(\d+)$')
+	WINNING_REGEX = re.compile('^(?:\+.)?(\d+)$')
+	BINARIZE_THRESHOLD = 128
 
 	def generate_screenshot_name():
 		return f'Screenshot on {time.ctime()}-{datetime.now().microsecond}.png'\
@@ -32,30 +37,19 @@ class Reader:
 		width = int(get_screen_size()[0] * PLACE_BET_SCREEN_ODDS_WIDTH)
 		height = int(get_screen_size()[1] * PLACE_BET_SCREEN_ODDS_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
-		return Reader.enhance_screenshot(raw_img)
+		enhanced_img = Reader.enhance_screenshot(raw_img)
+		img_arr = np.array(enhanced_img)
+		binarized_img = np.mean(enhanced_img, axis=2) > Reader.BINARIZE_THRESHOLD
+		return binarized_img
 
 	def parse_odd(img):
-		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=0123456789/EVNS')
-
-		# Good OCR
-		if ocr_res == 'EVENS':
-			return 1
-		matched = Reader.odd_regex.match(ocr_res)
-		if matched:
-			return int(matched[1])
-
-		# Bad OCR
-		img_name = Reader.generate_screenshot_name()
-		img.save(img_name)
-		log(f'Error! Read {ocr_res} for odd screenshot "{img_name}"')
-		return 1
-
+		pass
 
 	def parse_winning(img):
 		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
 
 		# Good OCR
-		matched = Reader.winning_regex.match(ocr_res)
+		matched = Reader.WINNING_REGEX.match(ocr_res)
 		if matched:
 			return int(matched[1])
 
