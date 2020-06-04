@@ -22,15 +22,16 @@ def check_game_running():
 def get_screen_size():
 	return pyautogui.size()
 
-def check_aspect_ratio():
-	x,y = pyautogui.size()
-	return abs(x/y - ASPECT_RATIO) < 0.1
+def check_aspect_ratio(width=None, height=None):
+	if width is None or height is None:
+		width, height = pyautogui.size()
+	return abs(width/height - ASPECT_RATIO) < 0.1
 
-def at_start_screen():
-	return pyautogui.pixelMatchesColor(0, 0, START_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+def at_start_screen(x, y):
+	return pyautogui.pixelMatchesColor(x, y, START_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
 
-def at_place_bet_screen():
-	return pyautogui.pixelMatchesColor(0, 0, PLACE_BET_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+def at_place_bet_screen(x, y):
+	return pyautogui.pixelMatchesColor(x, y, PLACE_BET_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
 
-def at_results_screen():
-	return pyautogui.pixelMatchesColor(0, 0, RESULTS_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+def at_results_screen(x, y):
+	return pyautogui.pixelMatchesColor(x, y, RESULTS_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)

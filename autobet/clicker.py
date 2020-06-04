@@ -8,68 +8,63 @@ import random
 import time
 
 class Clicker:
-	def get_random_mouse_duration():
+	def __init__(game_coord):
+		self.game_coord = game_coord
+
+	# Translates fractional to actual coordinaates
+	def translate_coord(self, x, y):
+		new_x = int(self.game_coord.width * x) + self.game_coord.left
+		new_y = int(self.game_coord.height * y) + self.game_coord.top
+		return new_x, new_y
+
+	def get_random_mouse_duration(self):
 		return random.uniform(MOUSE_MOVEMENT_MIN_DURATION_SECONDS,
 			MOUSE_MOVEMENT_MAX_DURATION_SECONDS)
 
-	def get_random_delay():
+	def get_random_delay(self):
 		return random.uniform(MIN_ACTION_DELAY_SECONDS, MAX_ACTION_DELAY_SECONDS)
 
-	def get_random_pixel():
-		x, y = get_screen_size()
-		rand_x = int(random.random() * x)
-		rand_y = int(random.random() * y)
-		return rand_x, rand_y
-
-	def click_curr(x, y):
+	def single_click(self, x, y):
 		pydirectinput.mouseUp(x, y)
-		time.sleep(Clicker.get_random_delay())
+		time.sleep(self.get_random_delay())
 		pydirectinput.mouseDown(x, y)
-		time.sleep(Clicker.get_random_delay())
+		time.sleep(self.get_random_delay())
 
-	def press_key(key):
+	def press_key(self, key):
 		pydirectinput.press(key)
-		time.sleep(Clicker.get_random_delay())
+		time.sleep(self.get_random_delay())
 
-	def move_mouse(x, y, frac=True):
-		if frac:
-			x = int(get_screen_size()[0] * x)
-			y = int(get_screen_size()[1] * y)
-		dx = int(get_screen_size()[0] * random.uniform(-MOUSE_X_RADIUS, MOUSE_X_RADIUS))
-		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE_Y_RADIUS))
-		pyautogui.moveTo(x+dx, y+dy, Clicker.get_random_mouse_duration())
-		time.sleep(Clicker.get_random_delay())
+	def move_mouse(self, x, y):
+		pyautogui.moveTo(x, y, self.get_random_mouse_duration())
+		time.sleep(self.get_random_delay())
 
-	def click(x, y, times=1, frac=True):
-		if frac:
-			x = int(get_screen_size()[0] * x)
-			y = int(get_screen_size()[1] * y)
-		dx = int(get_screen_size()[0] * random.uniform(-MOUSE_X_RADIUS, MOUSE_X_RADIUS))
-		dy = int(get_screen_size()[1] * random.uniform(-MOUSE_Y_RADIUS, MOUSE_Y_RADIUS))
+	def click(self, x, y, times=1, translate=False):
+		if translate:
+			x, y = self.translate_coord(x, y)
 		for _ in range(times):
-			Clicker.click_curr(x+dx, y+dy)
+			self.single_click(x, y)
 
-	def click_place_bet_start_screen():
-		Clicker.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y)
+	def click_place_bet_start_screen(self):
+		self.click(START_SCREEN_PLACE_BET_X, START_SCREEN_PLACE_BET_Y, translate=True)
 
-	def click_bet_again():
-		Clicker.click(RESULTS_SCREEN_BET_AGAIN_X, RESULTS_SCREEN_BET_AGAIN_Y)
+	def click_bet_again(self):
+		self.click(RESULTS_SCREEN_BET_AGAIN_X, RESULTS_SCREEN_BET_AGAIN_Y, translate=True)
 
-	def exit_and_reenter():
-		Clicker.press_key('esc')
-		time.sleep(Clicker.get_random_delay())
-		Clicker.click(*SAFE_CLICK_X_Y)
+	def exit_and_reenter(self):
+		self.press_key('esc')
+		time.sleep(self.get_random_delay())
+		self.click(*SAFE_CLICK_X_Y, translate=True)
 
-	def place_bet(position, amount):
+	def place_bet(self, position, amount):
 		num_clicks = bisect.bisect_left(BET_AMOUNTS, amount)
 		if num_clicks == 0:
 			return
 		# Click corresponding horse
-		Clicker.click(PLACE_BET_SCREEN_BETS_X, PLACE_BET_SCREEN_BETS_YS[position])
+		self.click(PLACE_BET_SCREEN_BETS_X, PLACE_BET_SCREEN_BETS_YS[position], translate=True)
 		# Click bet amount
-		Clicker.click(PLACE_BET_SCREEN_INCREMENT_X, PLACE_BET_SCREEN_INCREMENT_Y, times=num_clicks)
+		self.click(PLACE_BET_SCREEN_INCREMENT_X, PLACE_BET_SCREEN_INCREMENT_Y, times=num_clicks, translate=True)
 		# Click place bet
-		Clicker.click(PLACE_BET_SCREEN_PLACE_BET_X, PLACE_BET_SCREEN_PLACE_BET_Y)
+		self.click(PLACE_BET_SCREEN_PLACE_BET_X, PLACE_BET_SCREEN_PLACE_BET_Y, translate=True)
 
 
 
