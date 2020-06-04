@@ -21,7 +21,7 @@ class Reader:
 	# Assume that if '+' is read, it's always followed by the currency symbol
 	WINNING_REGEX = re.compile('^(?:\+.)?(\d+)$')
 
-	def __init__(game_coord):
+	def __init__(self, game_coord):
 		self.game_coord = game_coord
 
 	def generate_screenshot_name(self, fmt):

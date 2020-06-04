@@ -8,7 +8,7 @@ import random
 import time
 
 class Clicker:
-	def __init__(game_coord):
+	def __init__(self, game_coord):
 		self.game_coord = game_coord
 
 	# Translates fractional to actual coordinaates
