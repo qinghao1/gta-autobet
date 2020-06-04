@@ -63,6 +63,7 @@ class App:
 
 	def main_loop(self, clicker, reader):
 		top_left_coord = self.screen_coord[:2]
+		top_left_coord = [i+1 for i in top_left_coord]
 
 		for _ in range(6):
 			if not at_start_screen(*top_left_coord):
