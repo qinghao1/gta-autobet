@@ -28,10 +28,10 @@ def check_aspect_ratio(width=None, height=None):
 	return abs(width/height - ASPECT_RATIO) < 0.1
 
 def at_start_screen(x, y):
-	return pyautogui.pixelMatchesColor(x, y, START_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+	return pyautogui.pixelMatchesColor(int(x), int(y), START_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
 
 def at_place_bet_screen(x, y):
-	return pyautogui.pixelMatchesColor(x, y, PLACE_BET_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+	return pyautogui.pixelMatchesColor(int(x), int(y), PLACE_BET_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
 
 def at_results_screen(x, y):
-	return pyautogui.pixelMatchesColor(x, y, RESULTS_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
+	return pyautogui.pixelMatchesColor(int(x), int(y), RESULTS_SCREEN_TOP_LEFT_PIXEL_RGB, tolerance=5)
