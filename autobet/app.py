@@ -85,8 +85,8 @@ class App:
 		odds = reader.read_odds()
 		self.odds.append(odds)
 		bet_position, bet_amount = Bettor.bet(odds)
-		clicker.place_bet(bet_position, bet_amount)
 		log(f'Placing bet on {bet_position} for {bet_amount}')
+		clicker.place_bet(bet_position, bet_amount)
 		time.sleep(HORSE_RACE_DURATION_SECONDS)
 
 		if not at_results_screen(*top_left_coord):
