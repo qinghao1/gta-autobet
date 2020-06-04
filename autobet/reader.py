@@ -16,10 +16,9 @@ if platform.system() == 'Windows':
 MODEL = ocr_model.load_model()
 
 class Reader:
-	#'X/1' can sometimes be OCRed as 'XN'
-	ODD_REGEX = re.compile('^(\d+)\/?1?N?$')
 	# Assume that if '+' is read, it's always followed by the currency symbol
 	WINNING_REGEX = re.compile('^(?:\+.)?(\d+)$')
+	OCR_MODEL_INPUT_DIMENSIONS = (int(PLACE_BET_SCREEN_ODDS_WIDTH * SCREEN_WIDTH), int(PLACE_BET_SCREEN_ODDS_HEIGHT * SCREEN_HEIGHT))
 
 	def __init__(self, game_coord):
 		self.game_coord = game_coord
@@ -39,7 +38,10 @@ class Reader:
 		height = int(self.game_coord.height * PLACE_BET_SCREEN_ODDS_HEIGHT)
 		raw_img = pyautogui.screenshot(region=(left, top, width, height))
 		enhanced_img = self.enhance_screenshot(raw_img)
-		return enhanced_img.convert('L')
+		bw_img = enhanced_img.convert('L')
+		if bw_img.size != Reader.OCR_MODEL_INPUT_DIMENSIONS:
+			bw_img = bw_img.resize(Reader.OCR_MODEL_INPUT_DIMENSIONS)
+		return bw_img
 
 	def parse_winning(self, img):
 		ocr_res = pytesseract.image_to_string(img, config='--psm 8 -c tessedit_char_whitelist=+0123456789')
