@@ -34,7 +34,7 @@ class App:
 		except:
 			log("Not on start screen")
 			return self.stop()
-		log(f'Found coordinates {screen_coord}')
+		log(f'Found coordinates {self.screen_coord}')
 		width, height = self.screen_coord[2:]
 		if not check_aspect_ratio(width, height):
 			log("Game is not running.")
