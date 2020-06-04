@@ -30,10 +30,11 @@ class App:
 			return self.stop()
 		try:
 			self.screen_coord = locateOnScreen(App.START_SCREEN_IMAGE,
-				confidence=0.9)
+				confidence=0.95)
 		except:
 			log("Not on start screen")
 			return self.stop()
+		log(f'Found coordinates {screen_coord}')
 		width, height = self.screen_coord[2:]
 		if not check_aspect_ratio(width, height):
 			log("Game is not running.")
