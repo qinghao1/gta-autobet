@@ -66,14 +66,10 @@ class App:
 		top_left_coord = self.screen_coord[:2]
 		top_left_coord = [i+1 for i in top_left_coord]
 
-		for _ in range(6):
-			if not at_start_screen(*top_left_coord):
-				log("Not on betting screen. Waiting for 5s.")
-				time.sleep(5)
-			else:
-				break
 		if not at_start_screen(*top_left_coord):
-			log("Waited for 30s. Exiting and re-entering...")
+			time.sleep(3)
+		if not at_start_screen(*top_left_coord):
+			log("Game bug. Exiting and re-entering...")
 			clicker.exit_and_reenter()
 			return
 
