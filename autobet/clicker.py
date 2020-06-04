@@ -25,9 +25,8 @@ class Clicker:
 		return random.uniform(MIN_ACTION_DELAY_SECONDS, MAX_ACTION_DELAY_SECONDS)
 
 	def single_click(self, x, y):
-		pydirectinput.mouseUp(x, y)
-		time.sleep(self.get_random_delay())
 		pydirectinput.mouseDown(x, y)
+		pydirectinput.mouseUp(x, y)
 		time.sleep(self.get_random_delay())
 
 	def press_key(self, key):
