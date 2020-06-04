@@ -68,7 +68,7 @@ class App:
 
 		for _ in range(6):
 			if not at_start_screen(*top_left_coord):
-				log("Not on betting screen. Waiting for 5s.")
+				log("Not on start screen. Waiting for 5s.")
 				time.sleep(5)
 			else:
 				break
