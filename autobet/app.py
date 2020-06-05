@@ -36,7 +36,7 @@ class App:
 		log(f'Found coordinates {self.screen_coord}')
 		width, height = self.screen_coord[2:]
 		if not check_aspect_ratio(width, height):
-			log("Game is not running.")
+			log("Wrong game aspect ratio.")
 			return self.stop()
 
 		log('Started.')
