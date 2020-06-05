@@ -6,7 +6,7 @@ Autobettor for GTA Online's Inside Track (horse racing) casino minigame. This sc
 
 You need to have Python <= 3.7 and pip installed.
 
-In your preferred, terminal, after running `git clone`, simply run the following:
+In your preferred terminal, after running `git clone`, simply run the following:
 
 ```
 pip install -r requirements.txt
@@ -18,6 +18,8 @@ Start the game (windowed mode is preferred as it has less graphics lag). Make su
 ![Minigame Start Screen](images/start_screen.png "Start Screen")
 
 Then, press **F8** to start the program. Leave the game running in the foreground. You can check your earnings in the terminal output.
+
+You can press **F8** again to stop the program. However if the Python main thread is running, it won't stop immediately. You can simply press Ctrl+C in the terminal to stop it.
 
 ## Note
 
