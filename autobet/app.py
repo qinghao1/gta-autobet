@@ -104,7 +104,8 @@ class App:
 		seconds_elapsed = time.time() - self.start_time
 		hours_elapsed = seconds_elapsed / 3600
 		winnings_per_hour = self.acc_winnings / hours_elapsed
-		log(f'Time elapsed: {str(timedelta(seconds=seconds_elapsed))} Avg Earnings: ${winnings_per_hour}/hr')
+		log(f'Time elapsed: {str(timedelta(seconds=seconds_elapsed)).split(".")[0]} \
+			Avg Earnings: ${round(winnings_per_hour)}/hr')
 		clicker.click_bet_again()
 
 		if not at_start_screen(*top_left_coord):
