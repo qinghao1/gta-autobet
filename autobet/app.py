@@ -1,5 +1,6 @@
 from pynput import keyboard
 from pyautogui import locateOnScreen
+from datetime import timedelta
 from autobet.clicker import Clicker
 from autobet.reader import Reader
 from autobet.bettor import Bettor
@@ -18,8 +19,6 @@ class App:
 
 	def __init__(self):
 		self.started = False
-		self.odds = []
-		self.winnings = []
 
 	def start(self):
 		if self.started:
@@ -41,6 +40,9 @@ class App:
 
 		log('Started.')
 		self.started = True
+		self.start_time = time.time()
+		self.acc_winnings = 0
+		self.winnings = []
 		clicker = Clicker(self.screen_coord)
 		reader = Reader(self.screen_coord)
 		with keyboard.Listener(on_press=self.on_press) as listener:
@@ -82,7 +84,6 @@ class App:
 			return
 
 		odds = reader.read_odds()
-		self.odds.append(odds)
 		bet_position, bet_amount = Bettor.bet(odds)
 		log(f'Placing bet on {bet_position} for {bet_amount}')
 		clicker.place_bet(bet_position, bet_amount)
@@ -98,7 +99,12 @@ class App:
 		winning = reader.read_winning()
 		net_won = winning - bet_amount
 		self.winnings.append(net_won)
-		log(f'Made ${net_won}. Session total: ${sum(self.winnings)}')
+		self.acc_winnings += net_won
+		log(f'Made ${net_won}. Session total: ${acc_winnings}')
+		seconds_elapsed = time.time() - self.start_time
+		hours_elapsed = seconds_elapsed / 3600
+		winnings_per_hour = acc_winnings / hours_elapsed
+		log(f'Time elapsed: {str(timedelta(seconds=seconds_elapsed))} Avg Earnings: ${winnings_per_hour}/hr')
 		clicker.click_bet_again()
 
 		if not at_start_screen(*top_left_coord):
