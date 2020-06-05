@@ -25,7 +25,7 @@ You can press **F8** again to stop the program. However if the Python main threa
 
 - I'm not responsible if you get banned from this. However, this program does not modify the game in any way and only simulates mouse and keyboard inputs.
 
-- The OCR program [tesseract](https://github.com/tesseract-ocr/tesseract)that reads the winnings is not very good and makes errors sometimes. This means that your total earnings will be slightly higher than what is shown.
+- The OCR program [tesseract](https://github.com/tesseract-ocr/tesseract) that reads the winnings is not very good and makes errors sometimes. This means that your total earnings will be slightly higher than what is shown.
 
 - There are other similar programs available ([1](https://github.com/list12356/gta_casino_script), [2](https://github.com/MarkusJx/autobet)). This program was written to be simpler and easier to understand and tweak.
 
