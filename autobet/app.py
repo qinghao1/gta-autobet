@@ -97,8 +97,8 @@ class App:
 
 		winning = reader.read_winning()
 		net_won = winning - bet_amount
-		log(f'Made ${net_won}')
 		self.winnings.append(net_won)
+		log(f'Made ${net_won}. Session total: ${sum(self.winnings)}')
 		clicker.click_bet_again()
 
 		if not at_start_screen(*top_left_coord):
