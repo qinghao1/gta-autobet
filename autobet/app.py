@@ -28,10 +28,9 @@ class App:
 		if not check_game_running():
 			log("Game is not running.")
 			return self.stop()
-		try:
-			self.screen_coord = locateOnScreen(App.START_SCREEN_IMAGE,
-				confidence=0.95)
-		except:
+		self.screen_coord = locateOnScreen(App.START_SCREEN_IMAGE,
+			confidence=0.95)
+		if self.screen_coord is None:
 			log("Not on start screen")
 			return self.stop()
 		log(f'Found coordinates {self.screen_coord}')
