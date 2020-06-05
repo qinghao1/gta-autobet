@@ -85,7 +85,7 @@ class App:
 
 		odds = reader.read_odds()
 		bet_position, bet_amount = Bettor.bet(odds)
-		log(f'Placing bet on {bet_position} for {bet_amount}')
+		log(f'Placing bet on {bet_position+1} for {bet_amount}')
 		clicker.place_bet(bet_position, bet_amount)
 		time.sleep(HORSE_RACE_DURATION_SECONDS)
 
