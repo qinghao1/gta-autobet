@@ -100,10 +100,10 @@ class App:
 		net_won = winning - bet_amount
 		self.winnings.append(net_won)
 		self.acc_winnings += net_won
-		log(f'Made ${net_won}. Session total: ${acc_winnings}')
+		log(f'Made ${net_won}. Session total: ${self.acc_winnings}')
 		seconds_elapsed = time.time() - self.start_time
 		hours_elapsed = seconds_elapsed / 3600
-		winnings_per_hour = acc_winnings / hours_elapsed
+		winnings_per_hour = self.acc_winnings / hours_elapsed
 		log(f'Time elapsed: {str(timedelta(seconds=seconds_elapsed))} Avg Earnings: ${winnings_per_hour}/hr')
 		clicker.click_bet_again()
 
