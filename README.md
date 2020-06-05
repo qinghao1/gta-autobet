@@ -1,6 +1,6 @@
 # GTA Online Autobettor
 
-Autobettor for GTA Online's Inside Track (horse racing) casino minigame. This script averages GTA$200k/hr or so with a high variance. The in-game text is read with a specifically trained, highly accurate AI model.
+Autobettor for GTA Online's Inside Track (horse racing) casino minigame. [Background](https://www.reddit.com/r/gtaonline/comments/ciuz70/ultimate_gambling_guide_for_gta_online_odds/) This script averages GTA$200k/hr or so with a high variance. The in-game text is read with a specifically trained, highly accurate AI model.
 
 ## Installation and Usage
 
