@@ -7,4 +7,3 @@ pillow
 pydirectinput
 tensorflow
 numpy
-opencv-python

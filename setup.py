@@ -22,7 +22,7 @@ VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'pytesseract', 'pyautogui', 'psutil', 'pynput', 'opencv-python', 'pillow', 'pydirectinput', 'tensorflow', 'numpy', 'opencv-python'
+    'pytesseract', 'pyautogui', 'psutil', 'pynput', 'opencv-python', 'pillow', 'pydirectinput', 'tensorflow', 'numpy'
 ]
 
 # What packages are optional?
