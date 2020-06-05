@@ -13,7 +13,7 @@ pip install -r requirements.txt
 python -m autobet
 ```
 
-Start the game (windowed mode is preferred as it has less graphics lag). Make sure it is running at an aspect ratio of 16:9. Then, enter the casino and start the minigame. You should be at the following screen:
+Start the game (windowed mode is preferred as it has less graphics lag). Make sure it is running at an aspect ratio of 16:9. Then, enter the casino and start the minigame. Make sure you have enough (>= 100k) chips. You should be at the following screen:
 
 ![Minigame Start Screen](images/start_screen.png "Start Screen")
 
@@ -21,7 +21,7 @@ Then, press **F8** to start the program. Leave the game running in the foregroun
 
 You can press **F8** again to stop the program. However if the Python main thread is running, it won't stop immediately. You can simply press Ctrl+C in the terminal to stop it.
 
-## Note
+## Notes
 
 - I'm not responsible if you get banned from this. However, this program does not modify the game in any way and only simulates mouse and keyboard inputs.
 
