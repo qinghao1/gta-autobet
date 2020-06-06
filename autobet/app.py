@@ -24,9 +24,6 @@ class App:
 		if self.started:
 			log("Already started.")
 			return
-		if not check_game_running():
-			log("Game is not running.")
-			return self.stop()
 		self.screen_coord = locateOnScreen(App.START_SCREEN_IMAGE,
 			confidence=0.95)
 		if self.screen_coord is None:
